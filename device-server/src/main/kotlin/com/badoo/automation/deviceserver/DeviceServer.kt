@@ -375,6 +375,11 @@ fun Application.module() {
                     val environmentVariables = jsonContent<Map<String, String>>(call)
                     call.respond(devicesController.setEnvironmentVariables(ref, environmentVariables))
                 }
+                get("environment/{env}") {
+                    val ref = param(call, "ref")
+                    val environmentVariable = param(call, "env")
+                    call.respond(devicesController.getEnvironmentVariable(ref, environmentVariable))
+                }
             }
         }
     }

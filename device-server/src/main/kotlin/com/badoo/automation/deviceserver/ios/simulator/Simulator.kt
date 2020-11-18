@@ -1073,4 +1073,15 @@ class Simulator(
         }
         remote.shell("xcrun simctl spawn $udid launchctl setenv ${envsArguments.joinToString(" ")}")
     }
+
+    override fun getEnvironmentVariable(env: String): String {
+        if (env.isEmpty()) {
+            logger.debug(logMarker, "Passed empty environment variable to fetch for Simulator $this")
+            return ""
+        }
+
+        logger.debug(logMarker, "Getting environment variables $env for Simulator $this")
+
+        return remote.shell("xcrun simctl getenv $udid $env").stdOut.trim() // remove last new_line
+    }
 }
