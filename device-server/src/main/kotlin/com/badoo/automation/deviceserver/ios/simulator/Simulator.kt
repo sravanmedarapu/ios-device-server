@@ -1073,4 +1073,14 @@ class Simulator(
         }
         remote.shell("xcrun simctl spawn $udid launchctl setenv ${envsArguments.joinToString(" ")}")
     }
+
+    override fun getEnvironmentVariable(variableName: String): String {
+
+        logger.debug(logMarker, "Getting environment variable $variableName for Simulator $this")
+        if(!"[a-zA-Z0-9_]+$".toRegex().matches(variableName)) {
+            throw InvalidFormatException("Variable Name should contain only alphabets, numbers and underscores but given $variableName")
+        }
+
+        return remote.shell("xcrun simctl getenv $udid $variableName").stdOut.trim() // remove last new_line
+    }
 }
