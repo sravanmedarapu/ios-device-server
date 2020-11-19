@@ -41,8 +41,10 @@ class DataContainer(
         }
     }
 
-    fun writeFile(file: File, data: ByteArray) {
-        val dataContainerFile = File(basePath.absolutePath, file.name)
+    fun writeFile(file: File, data: ByteArray, path: String?) {
+        // Write to DataContainer's basePath if path isn't specified.
+        // TODO: should delete file if it already exit?
+        val dataContainerFile = if (path.isNullOrBlank()) File(basePath.absolutePath, file.name) else File(path, file.name)
 
         if (remote.isLocalhost()) {
             dataContainerFile.writeBytes(data)
@@ -58,9 +60,10 @@ class DataContainer(
         }
     }
 
-    fun delete() {
-        remote.shell("rm -rf ${basePath.absolutePath}")
-        remote.shell("mkdir -p ${basePath.absolutePath}")
+    fun delete(path: String = basePath.absolutePath) {
+        remote.shell("rm -rf $path")
+        // TODO: If given file isn't directory then why to create dir ?
+        remote.shell("mkdir -p $path")
     }
 
     fun setPlistValue(path: Path, key: String, value: String) {

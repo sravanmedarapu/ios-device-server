@@ -241,7 +241,25 @@ fun Application.module() {
                             throw IllegalArgumentException("Bundle id is not set. Have to set 'bundle_id' to aprropriate value.")
                         }
 
-                        call.respond(devicesController.pushFile(ref, dataPath.file_name, dataPath.data, dataPath.bundleId))
+                        if (dataPath.data == null) {
+                            throw IllegalArgumentException(" data is not set. Have to set 'data' to aprropriate value.")
+                        }
+
+                        call.respond(devicesController.pushFile(ref, dataPath.file_name, dataPath.data, dataPath.bundleId, dataPath.path))
+                    }
+                    post("delete_file") {
+                        val ref = param(call, "ref")
+                        val dataPath = jsonContent<FileDto>(call)
+
+                        if (dataPath.bundleId == null) {
+                            throw IllegalArgumentException("Bundle id is not set. Have to set 'bundle_id' to appropriate value.")
+                        }
+
+                        if (dataPath.file_name.isNullOrEmpty()) {
+                            throw IllegalArgumentException("File Name is not set. Have to set 'file_name' to appropriate value.")
+                        }
+
+                        call.respond(devicesController.deleteFile(ref, dataPath.file_name, dataPath.bundleId, dataPath.path))
                     }
                     post("list_files") {
                         val ref = param(call, "ref")
@@ -289,6 +307,9 @@ fun Application.module() {
                     post {
                         val ref = param(call, "ref")
                         val dataPath = jsonContent<FileDto>(call)
+                        if (dataPath.data == null) {
+                            throw IllegalArgumentException(" data is not set. Have to set 'data' to aprropriate value.")
+                        }
                         call.respond(devicesController.addMedia(ref, dataPath.file_name, dataPath.data))
                     }
                 }

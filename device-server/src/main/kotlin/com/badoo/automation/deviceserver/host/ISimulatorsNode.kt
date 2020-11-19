@@ -58,7 +58,8 @@ interface ISimulatorsNode {
     fun deleteAppData(deviceRef: DeviceRef, bundleId: String)
     fun setEnvironmentVariables(deviceRef: DeviceRef, envs: Map<String, String>)
     fun getEnvironmentVariable(deviceRef: DeviceRef, env: String): String
-    fun pushFile(ref: DeviceRef, fileName: String, data: ByteArray, bundleId: String)
+    fun pushFile(ref: DeviceRef, fileName: String, data: ByteArray, bundleId: String, path: String?)
+    fun deleteFile(ref: DeviceRef, fileName: String, bundleId: String, path: String?)
     fun installApplication(deviceRef: DeviceRef, appBundleDto: AppBundleDto)
     fun appInstallationStatus(deviceRef: DeviceRef): Map<String, Boolean>
     fun updateApplicationPlist(ref: DeviceRef, plistEntry: PlistEntryDTO)

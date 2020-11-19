@@ -400,8 +400,17 @@ class SimulatorsNode(
         return getDeviceFor(deviceRef).dataContainer(dataPath.bundleId).readFile(dataPath.path)
     }
 
-    override fun pushFile(ref: DeviceRef, fileName: String, data: ByteArray, bundleId: String) {
-        getDeviceFor(ref).dataContainer(bundleId).writeFile(File(fileName), data)
+    override fun pushFile(ref: DeviceRef, fileName: String, data: ByteArray, bundleId: String, path: String?) {
+        getDeviceFor(ref).dataContainer(bundleId).writeFile(File(fileName), data, path)
+    }
+
+    override fun deleteFile(ref: DeviceRef, fileName: String, bundleId: String, path: String?) {
+        val file = if (path.isNullOrBlank()) {
+            File(getDeviceFor(ref).dataContainer(bundleId).basePath.absolutePath, fileName)
+        } else {
+            File(path, fileName)
+        }
+        getDeviceFor(ref).dataContainer(bundleId).delete(file.absolutePath)
     }
 
     override fun openUrl(deviceRef: DeviceRef, url: String) {

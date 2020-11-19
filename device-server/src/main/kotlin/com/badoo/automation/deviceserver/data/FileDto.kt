@@ -7,8 +7,11 @@ data class FileDto(
     val file_name: String,
 
     @JsonProperty("data")
-    val data: ByteArray,
+    val data: ByteArray?,
 
     @JsonProperty("bundle_id")
-    val bundleId: String? = null
+    val bundleId: String? = null,
+
+    @JsonProperty("path")
+    val path: String? = null
 )
