@@ -24,6 +24,6 @@ interface ISimulator: IDevice {
     fun dataContainer(bundleId: String): DataContainer
     fun deleteCrashLogs(): Boolean
     fun setEnvironmentVariables(envs: Map<String, String>)
-    fun getEnvironmentVariable(env: String): String
+    fun getEnvironmentVariable(variableName: String): String
     fun applicationContainer(bundleId: String): DataContainer
 }

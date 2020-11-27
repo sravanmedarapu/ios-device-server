@@ -382,12 +382,12 @@ class SimulatorsNodeTest {
     @Test
     fun getEnvironmentVariable() {
         createDeviceForTest()
-        var envVarName = "ENV_VAR1s"
-        var expectedEnvVarVal = "ENV_VAR1s"
+        var variableName = "ENV_VAR1s"
+        var expectedValue = "ENV_VAR1s"
 
-        whenever(simulatorMock.getEnvironmentVariable(envVarName)).thenReturn(expectedEnvVarVal)
-        
-        val actual = simulatorsNode.getEnvironmentVariable(ref1, envVarName)
-        Assert.assertThat(actual, equalTo(expectedEnvVarVal))
+        whenever(simulatorMock.getEnvironmentVariable(variableName)).thenReturn(expectedValue)
+
+        val actual = simulatorsNode.getEnvironmentVariable(ref1, variableName)
+        Assert.assertThat(actual, equalTo(expectedValue))
     }
 }

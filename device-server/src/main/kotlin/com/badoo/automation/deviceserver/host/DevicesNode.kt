@@ -500,7 +500,7 @@ class DevicesNode(
         throw(NotImplementedError("Setting environment variables is not supported by physical devices"))
     }
 
-    override fun getEnvironmentVariable(deviceRef: DeviceRef, env: String): String {
+    override fun getEnvironmentVariable(deviceRef: DeviceRef, variableName: String): String {
         throw(NotImplementedError("Getting environment variables is not supported by physical devices"))
     }
 
